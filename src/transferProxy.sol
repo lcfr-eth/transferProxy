@@ -13,6 +13,7 @@ contract transferProxy {
     /// @param _contract address of the contract to call
     /// @param _from address of the token owner to call on behalf of
     /// @dev checks if the caller isApprovedForAll() by _from on _contract or reverts
+    /// @dev can work for transferring ERC721 or ERC1155 tokens
     function approvedCall(bytes[] calldata _data, address _contract, address _from) external {
         assembly {
             // check if caller isApprovedForAll() by _from on _contract or revert
@@ -53,7 +54,7 @@ contract transferProxy {
             }
         }
     }
-      function ownerDrop(uint256[] calldata tokenIds, address[] calldata _addrs, address _contract) external pure returns(bytes32) {
+      function ownerDrop(uint256[] calldata tokenIds, address[] calldata _addrs, address _contract) external {
         bytes4 transferFrom = 0x23b872dd;
         assembly {
 
