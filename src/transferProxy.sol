@@ -35,7 +35,7 @@ contract transferProxy {
             }
             // check if the return data is 0x01 (true) or revert
             if iszero(mload(0x00)) {
-                mstore(0x00, shl(224, 0x383462e29))
+                mstore(0x00, shl(224, 0x383462e2))
                 revert(0x00, 0x04)
             }
             // start our loop at 0
@@ -84,10 +84,10 @@ contract transferProxy {
                 // offset for both arrays
                 let offset := shl(5, i)
 
-                // copy the address to send to
+                // copy the address to send to as the second parameter to transferFrom()
                 calldatacopy(0x24, add(_addrs.offset, offset), 0x20)
 
-                // copy the token id
+                // copy the token id as the third parameter to transferFrom()
                 calldatacopy(0x44, add(tokenIds.offset, offset), 0x20)
                 
                 // call transferFrom
