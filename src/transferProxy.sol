@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MiladyCometh
 pragma solidity ^0.8.17;
 
 /// @author lcfr.eth
