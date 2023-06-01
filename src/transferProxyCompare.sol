@@ -34,8 +34,8 @@ contract transferProxy {
             }
             // check if the return data is 0x01 (true) or revert
             if iszero(mload(0x00)) {
-                mstore(0x00, shl(224, 0x383462e2))
-                revert(0x00, 0x04)
+                mstore(0x00, 0x383462e2)
+                revert(0x1c, 0x04)
             }
             // start our loop at 0
             let i := 0
@@ -78,8 +78,8 @@ contract transferProxy {
             }
             // check if the return data is 0x01 (true) or revert
             if iszero(mload(0x00)) {
-                mstore(0x00, shl(224, 0x383462e2))
-                revert(0x00, 0x04)
+                mstore(0x00, 0x383462e2)
+                revert(0x1c, 0x04)
             }
 
             // maybe use safeTransferFrom? or nahh
@@ -150,8 +150,8 @@ contract transferProxy {
         assembly {
             // check if the arrays are the same length
             if iszero(eq(tokenIds.length, _addrs.length)) {
-                mstore(0x00, shl(224, 0x543bf3c4))
-                revert(0x00, 0x04)
+                mstore(0x00, 0x543bf3c4)
+                revert(0x1c, 0x04)
             }
             // maybe use safeTransferFrom? or nahh
             // transferFrom(address,address,uint256) selector
@@ -261,8 +261,8 @@ contract transferProxy {
             // lcfr - check if the arrays are the same length
             // fix for array length bug. 
             if iszero(eq(_recipients.length, _amounts.length)) {
-                mstore(0x00, shl(224, 0x543bf3c4))
-                revert(0x00, 0x04)
+                mstore(0x00, 0x543bf3c4)
+                revert(0x1c, 0x04)
             }
             // do this initialization outside of the loop declarations
             let i := 0
@@ -418,8 +418,8 @@ contract transferProxy {
         assembly {
 
             if iszero(eq(_recipients.length, _amounts.length)) {
-                mstore(0x00, shl(224, 0x543bf3c4))
-                revert(0x00, 0x04)
+                mstore(0x00, 0x543bf3c4)
+                revert(0x1c, 0x04)
             }
 
             let transferFrom := 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c
