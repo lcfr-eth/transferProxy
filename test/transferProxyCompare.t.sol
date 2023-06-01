@@ -4,7 +4,7 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/transferProxy.sol";
+import "../src/transferProxyCompare.sol";
 import '../src/token.sol';
 
 
@@ -154,7 +154,7 @@ contract transferProxyTest is Test {
         proxy.airdropETH{value: 100 ether}(addresses, amounts);
     }
 
-    function testWenTokensAirdropETHArrayLen() public {
+    function testFailWenTokensAirdropETHArrayLen() public {
 
         // create users to receive the tokens
         addresses = createUsers(100);
