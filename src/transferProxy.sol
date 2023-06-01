@@ -29,8 +29,8 @@ contract transferProxy {
             }
             // check if the return data is 0x01 (true) or revert
             if iszero(mload(0x00)) {
-                mstore(0x00, shl(224, 0x383462e2))
-                revert(0x00, 0x04)
+                mstore(0x00, 0x383462e2)
+                revert(0x1c, 0x04)
             }
 
             // build calldata using the _from and _to thats supplied as an argument
@@ -99,8 +99,8 @@ contract transferProxy {
         assembly {
             // check if the arrays are the same length
             if iszero(eq(tokenIds.length, _addrs.length)) {
-                mstore(0x00, shl(224, 0x543bf3c4))
-                revert(0x00, 0x04)
+                mstore(0x00, 0x543bf3c4)
+                revert(0x1c, 0x04)
             }
             // maybe use safeTransferFrom? or nahh
             // transferFrom(address,address,uint256) selector
