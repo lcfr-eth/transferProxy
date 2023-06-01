@@ -82,9 +82,7 @@ contract transferProxy {
                 revert(0x1c, 0x04)
             }
 
-            // maybe use safeTransferFrom? or nahh
             // build calldata using the _from and _to thats supplied as an argument
-
             // transferFrom(address,address,uint256) selector
             let transferFrom := 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c
             // store the selector at 0x00
