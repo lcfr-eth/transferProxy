@@ -14,6 +14,6 @@ contract DeployTransferProxyScript is Script {
     function run() public {
         vm.startBroadcast(vm.envUint("DEPLOYER_PRIVATE_KEY"));
         transferProxy TransferProxy = new transferProxy();
-        console.log("BasicBulkreg", address(TransferProxy));
+        console.log("transferProxy: ", address(TransferProxy));
     }
 }

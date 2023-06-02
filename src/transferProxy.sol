@@ -192,6 +192,7 @@ contract transferProxy {
         }
 
     }
+    
     // ApprovedTransferERC1155 can be done via the ERC1155 safeBatchTransferFrom() function in the UI
     // OwnerTransferERC1155 can be done via the ERC1155 safeBatchTransferFrom() function in the UI
 }
