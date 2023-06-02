@@ -11,7 +11,7 @@ contract transferProxy {
     error arrayLengthMismatch();
 
     // transfers a batch of ERC721 tokens to a single address recipient from an approved caller address
-    function ApprovedTransferERC721(uint256[] calldata tokenIds, address _contract, address _from, address _to) external {
+    function approvedTransferERC721(uint256[] calldata tokenIds, address _contract, address _from, address _to) external {
         assembly {
             // check if caller isApprovedForAll() by _from on _contract or revert
             mstore(0x00, shl(224, 0xe985e9c5))
@@ -35,9 +35,8 @@ contract transferProxy {
 
             // build calldata using the _from and _to thats supplied as an argument
             // transferFrom(address,address,uint256) selector
-            let transferFrom := 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c
             // store the selector at 0x00
-            mstore(0x00, transferFrom)
+            mstore(0x00, 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c)
             // store the caller as the first parameter to transferFrom()
             mstore(0x04, _from)
             // store _to as the second parameter to transferFrom()
@@ -66,11 +65,9 @@ contract transferProxy {
     /// @notice transfer assets from the owner to the _to address
     function ownerTransferERC721(uint256[] calldata tokenIds, address _to, address _contract) external {
         assembly {
-            // maybe use safeTransferFrom? or nahh
             // transferFrom(address,address,uint256) selector
-            let transferFrom := 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c
             // store the selector at 0x00
-            mstore(0x00, transferFrom)
+            mstore(0x00, 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c)
             // store the caller as the first parameter to transferFrom()
             mstore(0x04, caller())
             // store _to as the second parameter to transferFrom()
@@ -104,9 +101,8 @@ contract transferProxy {
             }
             // maybe use safeTransferFrom? or nahh
             // transferFrom(address,address,uint256) selector
-            let transferFrom := 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c
             // store the selector at 0x00
-            mstore(0x00, transferFrom)
+            mstore(0x00, 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c)
             // store the caller as the first parameter to transferFrom()
             mstore(0x04, caller())
 
@@ -134,9 +130,57 @@ contract transferProxy {
         }
     }
 
-    function ownerAirDropERC1155() external {}
+    // we just smash all the memory from 0x00 - 0xC4 like its a stack based buffer and the year is 1992.
+    function ownerAirDropERC1155(uint256[] calldata _tokenIds, uint256[] calldata _amounts, address[] calldata _addrs, address _contract) external {
+        assembly {
+            
+            // check if all 3 the arrays are the same length
+            let lenCheck := eq(_tokenIds.length, _amounts.length)
+            lenCheck := and(lenCheck, eq(_amounts.length, _addrs.length))
+
+            if iszero(lenCheck) {
+                mstore(0x00, 0x543bf3c4)
+                revert(0x1c, 0x04)
+            }
+
+            // ERC1155 safeTransferFrom(address,address,uint256,uint256,bytes)
+
+            // store the selector at 0x00
+            mstore(0x00, 0xf242432aac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c)
+            // store the caller as the first parameter to safeTransferFrom()
+            mstore(0x04, caller())
+
+             let i := 0
+             for {} 1 { i:= add(i, 1) } {
+                if eq(i, _tokenIds.length){ break }
+
+                // offset for both arrays
+                let offset := shl(5, i)
+
+                // copy the address to send to as the second parameter
+                calldatacopy(0x24, add(_addrs.offset, offset), 0x20)
+
+                // copy the token id as the third parameter
+                calldatacopy(0x44, add(_tokenIds.offset, offset), 0x20)
+
+                // copy the amount as the fourth parameter
+                calldatacopy(0x64, add(_amounts.offset, offset), 0x20)
+
+                // create an empty bytes and copy it as the fifth parameter
+                mstore(0x84, 0xa0)
+                mstore(0xa4, 0x00)
+
+                // call safeTransferFrom
+                let success := call( gas(), _contract, 0x00, 0x00, 0xc4, 0x00, 0x00 )
+
+                if iszero(success) {
+                    returndatacopy(0x00, 0x00, returndatasize())
+                    revert(0x00, returndatasize())
+                }
+            }
+        }
+
+    }
     // ApprovedTransferERC1155 can be done via the ERC1155 safeBatchTransferFrom() function in the UI
     // OwnerTransferERC1155 can be done via the ERC1155 safeBatchTransferFrom() function in the UI
-
-
 }

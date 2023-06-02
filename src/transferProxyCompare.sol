@@ -401,20 +401,12 @@ contract transferProxy {
     }
 
     function airdropERC20LCFR(
-        // y IERC20 _token tho? 
-        // IERC20 _token,
         address _token,
         address[] calldata _recipients,
         uint256[] calldata _amounts, 
         uint256 _total
     ) external {
-        // bytes selector for transferFrom(address,address,uint256)
-        // bytes4 transferFrom = 0x23b872dd;
-        // bytes selector for transfer(address,uint256)
-        // bytes4 transfer = 0xa9059cbb;
-
         assembly {
-
             if iszero(eq(_recipients.length, _amounts.length)) {
                 mstore(0x00, 0x543bf3c4)
                 revert(0x1c, 0x04)
