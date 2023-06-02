@@ -12,7 +12,7 @@ contract transferProxy {
     error arrayLengthMismatch();
 
     /// @notice intended for doing transferFrom or safeTransferFrom from an approved address
-    /// @dev !! unsafe !!
+    /// @dev !! unsafe !! DO - NOT - USE !! 
     /// attacker can set approval _from an address they control to an address they control on _contract
     /// then submit calldata for transferfrom/safetransferfrom with transfer calldata for a different previously/different approved address 
 

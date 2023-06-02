@@ -3,7 +3,18 @@ pragma solidity ^0.8.17;
 
 /// @author lcfr.eth
 /// @notice helper contract for Flashbots rescues using bundler.lcfr.io
-/// @dev :PpPPpPPppPPpPPpPPpP
+
+/// @dev avoids using freememptr to avoid unnecessary add() calls etc
+/// @dev this is fine as our functions execution are short & sweet.
+/// @dev for transferFrom calls the calldata is 0x64 bytes which is the size of the scratch space.
+
+/// @dev however for ERC1155 safeTransferFrom calls the calldata is 0xc4 bytes which is larger than the scratch space.
+/// @dev we dont care tho - smash all the memory like its a stack based buffer and the year is 1992.
+
+/// @dev We dont call any other internal / contract methods and only perform external calls:
+/// @dev No hash functions are used in our function executions so we dont need to care about 0x00 - 0x3f
+/// @dev No dynamic memory is used in our function executions so we dont need to care about 0x40 - 0x5f
+/// @dev No operations requiring the zero slot so we just plow through 0x60-0x7f also
 
 contract transferProxy {
     // 0x383462e2 == "notApproved()"
