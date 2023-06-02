@@ -6,8 +6,9 @@ pragma solidity ^0.8.17;
 /// @dev :PpPPpPPppPPpPPpPPpP
 
 contract transferProxy {
-
+    // 0x383462e2 == "notApproved()"
     error notApproved();
+    // 0x543bf3c4 == "arrayLengthMismatch()"
     error arrayLengthMismatch();
 
     // transfers a batch of ERC721 tokens to a single address recipient from an approved caller address
