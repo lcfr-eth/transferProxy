@@ -5,12 +5,9 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import "../src/transferProxyOld.sol";
-import '../src/token.sol';
-
 
 contract transferProxyTest is Test {
     transferProxy public proxy;
-    Token token;
 
     // token array for testing
     // owned by _holder
