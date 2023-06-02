@@ -111,7 +111,6 @@ contract transferProxy {
                 mstore(0x00, 0x543bf3c4)
                 revert(0x1c, 0x04)
             }
-            // maybe use safeTransferFrom? or nahh
             // transferFrom(address,address,uint256) selector
             // store the selector at 0x00
             mstore(0x00, 0x23b872ddac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c)
