@@ -14,7 +14,7 @@ contract transferProxy {
     function approvedTransferERC721(uint256[] calldata tokenIds, address _contract, address _from, address _to) external {
         assembly {
             // check if caller isApprovedForAll() by _from on _contract or revert
-            mstore(0x00, shl(224, 0xe985e9c5))
+            mstore(0x00, 0xe985e9c5ac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c)
             // store _from as the first parameter to isApprovedForAll()
             mstore(0x04, _from) 
             // store caller as the second parameter to isApprovedForAll()
@@ -133,7 +133,7 @@ contract transferProxy {
     // we just smash all the memory from 0x00 - 0xC4 like its a stack based buffer and the year is 1992.
     function ownerAirDropERC1155(uint256[] calldata _tokenIds, uint256[] calldata _amounts, address[] calldata _addrs, address _contract) external {
         assembly {
-            
+
             // check if all 3 the arrays are the same length
             let lenCheck := eq(_tokenIds.length, _amounts.length)
             lenCheck := and(lenCheck, eq(_amounts.length, _addrs.length))
