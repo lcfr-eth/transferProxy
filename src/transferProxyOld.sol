@@ -6,7 +6,7 @@ pragma solidity ^0.8.17;
 /// @notice can also be used for airdropping ERC721 && ERC1155 effeciently
 /// @dev :PpPPpPPppPPpPPpPPpP
 import "@openzeppelin/token/ERC20/utils/SafeERC20.sol";
-contract transferProxy {
+contract transferProxyOld {
 
     error notApproved();
     error arrayLengthMismatch();

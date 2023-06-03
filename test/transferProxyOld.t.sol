@@ -7,7 +7,7 @@ import "forge-std/Test.sol";
 import "../src/transferProxyOld.sol";
 
 contract transferProxyTest is Test {
-    transferProxy public proxy;
+    transferProxyOld public proxy;
 
     // token array for testing
     // owned by _holder
@@ -21,7 +21,7 @@ contract transferProxyTest is Test {
     address _ens = 0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85;
 
     function setUp() public {
-        proxy = new transferProxy();
+        proxy = new transferProxyOld();
     }
 
     event Log(uint256 index, uint256 token);

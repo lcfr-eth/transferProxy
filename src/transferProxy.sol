@@ -9,12 +9,12 @@ pragma solidity ^0.8.17;
 /// @dev for transferFrom calls the calldata is 0x64 bytes which is the size of the scratch space.
 
 /// @dev however for ERC1155 safeTransferFrom calls the calldata is 0xc4 bytes which is larger than the scratch space.
-/// @dev we dont care tho - smash all the memory like its a stack based buffer and the year is 1992and your name is aleph1
+/// @dev we dont care tho - smash all the memory like its a stack based buffer and the year is 1992AD and your name is aleph1.
 
 /// @dev We dont call any other internal / contract methods and only perform external calls:
 /// @dev No hash functions are used in our function executions so we dont need to care about 0x00 - 0x3f
 /// @dev No dynamic memory is used in our function executions so we dont need to care about 0x40 - 0x5f
-/// @dev No operations requiring the zero slot so we just plow through 0x60-0x7f also
+/// @dev No operations requiring the zero slot so we just plow through 0x60-0x7f+ also
 
 contract transferProxy {
     // 0x383462e2 == "notApproved()"
@@ -26,6 +26,7 @@ contract transferProxy {
     function approvedTransferERC721(uint256[] calldata tokenIds, address _contract, address _from, address _to) external {
         assembly {
             // check if caller isApprovedForAll() by _from on _contract or revert
+            // 0xac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c
             mstore(0x00, 0xe985e9c5ac1db17cac1db17cac1db17cac1db17cac1db17cac1db17cac1db17c)
             // store _from as the first parameter to isApprovedForAll()
             mstore(0x04, _from) 
@@ -192,7 +193,7 @@ contract transferProxy {
         }
 
     }
-    
+
     // ApprovedTransferERC1155 can be done via the ERC1155 safeBatchTransferFrom() function in the UI
     // OwnerTransferERC1155 can be done via the ERC1155 safeBatchTransferFrom() function in the UI
 }
