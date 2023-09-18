@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 /// @author lcfr.eth
 /// @notice helper contract for Flashbots rescues using bundler.lcfr.io
 
-/// @dev avoids using freememptr to avoid unnecessily calling add() in loops etc
+/// @dev avoids using freememptr & unnecessily calling add() in loops etc
 /// @dev this is fine as our functions execution are short & sweet.
 /// @dev for transferFrom calls the calldata is 0x64 bytes which is the size of the scratch space.
 
